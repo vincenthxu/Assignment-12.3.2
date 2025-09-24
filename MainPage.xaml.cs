@@ -1,24 +1,35 @@
-﻿namespace Assignment_12._3._2
+﻿using Assignment_12._3._2.Data;
+using Assignment_12._3._2.Models;
+using Assignment_12._3._2.Services;
+using System.Collections.ObjectModel;
+using Assignment_12._3._2.ViewModels;
+
+namespace Assignment_12._3._2
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
-        public MainPage()
+        public MainPage(BookViewModel bookViewModel)
         {
             InitializeComponent();
+            BindingContext = bookViewModel;
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void OnSaveBook(object sender, EventArgs e)
         {
-            count++;
+            // bookContext.Books.Add(data bound book);
+            await DisplayAlert("Save Book", $"Books saved!", "OK");
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        private async void OnDeleteBook(object sender, EventArgs e)
+        {
+            // bookContext.Books.Remove(data bound book);
+            await DisplayAlert("Delete Book", "Book deleted!", "OK");
+        }
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private async void OnFindBook(object sender, EventArgs e)
+        {
+            // get books from OpenLibrary API
+            await DisplayAlert("Find Book", "Book found!", "OK");
         }
     }
 

@@ -8,40 +8,32 @@ using System.Threading.Tasks;
 
 namespace Assignment_12._3._2.Models
 {
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Book
     {
-        private string isbn;
+        public List<string>? author_key { get; set; }
+        public List<string>? author_name { get; set; }
+        public string? cover_edition_key { get; set; }
+        public int cover_i { get; set; }
+        public string? ebook_access { get; set; }
+        public int edition_count { get; set; }
+        public int first_publish_year { get; set; }
+        public bool has_fulltext { get; set; }
+        public List<string>? ia { get; set; }
+        public string? ia_collection_s { get; set; }
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string ISBN
+        public string key { get; set; }
+        public List<string>? language { get; set; }
+        public string? lending_edition_s { get; set; }
+        public string? lending_identifier_s { get; set; }
+        public bool public_scan_b { get; set; }
+        public string? title { get; set; }
+        public override string ToString()
         {
-            get => isbn;
-            set
-            {
-                if (ValidateIsbn(value))
-                    this.isbn = value;
-            }
+            var authors = string.Empty;
+            if (author_name != null)
+                authors = $" by {string.Join(", ", author_name)}";
+            return $"{title}{authors}";
         }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string Description { get; set; }
-        private bool ValidateIsbn(string isbn)
-        {
-            if (isbn.Length != 10 || isbn.Length != 13) return false;
-
-            string firstThree = isbn.Substring(0, 3);
-            if (!prefix.Contains<string>(firstThree)) return false;
-
-            foreach (char c in isbn)
-            {
-                if (!char.IsDigit(c))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        private string[] prefix = ["978", "979"];
     }
 }
