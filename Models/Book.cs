@@ -32,8 +32,8 @@ namespace Assignment_12._3._2.Models
         {
             var authors = string.Empty;
             if (author_name != null)
-                authors = $" by {string.Join(", ", author_name)}";
-            return $"{title}{authors}";
+                authors = $"\nby {string.Join(", ", author_name)}";
+            return $"[{key}]\n{title}{authors}";
         }
     }
 }
