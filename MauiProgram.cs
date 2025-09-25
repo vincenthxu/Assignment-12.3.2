@@ -34,7 +34,7 @@ namespace Assignment_12._3._2
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<BookContext>();
-                db.Database.EnsureDeleted();
+                //db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 if(!db.Books.Any())
                 {
