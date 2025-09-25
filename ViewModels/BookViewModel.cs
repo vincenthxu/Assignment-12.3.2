@@ -55,7 +55,11 @@ namespace Assignment_12._3._2.ViewModels
             //add to SavedBooks
             //add to bookContext.books
 
-            if (bookContext.Books.Contains(book)) return;
+            if (bookContext.Books.Contains(book))
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"Cannot add: Database already contains book with primary key {book.key}!", "OK");
+                return;
+            }
 
             try
             {
@@ -64,9 +68,29 @@ namespace Assignment_12._3._2.ViewModels
                 await bookContext.Books.AddAsync(book);
                 await bookContext.SaveChangesAsync();
             }
-            catch
+            catch(Exception e)
             {
-                throw;
+                await App.Current.MainPage.DisplayAlert("Error", e.Message, "OK");
+            }
+        }
+        [RelayCommand]
+        private async void EditBook(Book book)
+        {
+            try
+            {
+                var index = SavedBooks.IndexOf(book);
+                var title = await App.Current.MainPage.DisplayPromptAsync("Edit", "Edit title", initialValue: book.title);
+                if (!string.IsNullOrWhiteSpace(title))
+                {
+                    book.title = title;
+                    bookContext.Books.Update(book);
+                    bookContext.SaveChanges();
+                    SavedBooks[index] = book;
+                }
+            }
+            catch(Exception e)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", e.Message, "OK");
             }
         }
         [RelayCommand]
@@ -76,7 +100,6 @@ namespace Assignment_12._3._2.ViewModels
             //remove from bookContext.Books
 
             SavedBooks.Remove(book);
-            QueriedBooks.Add(book);
             bookContext.Books.Remove(book);
             await bookContext.SaveChangesAsync();
         }

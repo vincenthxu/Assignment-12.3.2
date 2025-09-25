@@ -5,7 +5,7 @@
              xmlns:viewmodel="clr-namespace:Assignment_12._3._2.ViewModels"
              x:DataType="viewmodel:BookViewModel">
 
-    <Grid ColumnDefinitions="33*,33*,33*" Margin="5" ColumnSpacing="5">
+    <Grid ColumnDefinitions="20*,40*,40*" Margin="5" ColumnSpacing="5">
         
         <ContentView Grid.Column="0">
             <VerticalStackLayout>
@@ -45,11 +45,20 @@
                         <Border Padding="5">
                             <VerticalStackLayout>
                                 <Label Text="{Binding .}" FontSize="24" />
-                                <Button Text="Delete"
-                                        Background="Red"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BookViewModel}},Path=DeleteBookCommand}"
-                                        CommandParameter="{Binding .}"
-                                        />
+                                <Grid ColumnDefinitions="*,*">
+                                    <Button Text="Edit"
+                                            Grid.Column="0"
+                                            Background="Yellow"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BookViewModel}},Path=EditBookCommand}"
+                                            CommandParameter="{Binding .}"
+                                            />
+                                    <Button Text="Delete"
+                                            Grid.Column="1"
+                                            Background="Red"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BookViewModel}},Path=DeleteBookCommand}"
+                                            CommandParameter="{Binding .}"
+                                            />
+                                </Grid>
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>
